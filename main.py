@@ -60,9 +60,9 @@ def DataProcess():
     data = np.loadtxt('data.csv')
 
     # 按行取数据
-    for i in range(data.shape[0]):  # 按行读取
+    for i in range(2000):  # 按行读取
         face_array = data[i, :].reshape((48, 48))  # reshape 转成图像矩阵给cv2处理
-        if i < 24000:
+        if i < 1800:
             cv2.imwrite(path + '//train_data//' + '{0}.jpg'.format(i), face_array)  # csv文件转jpg写图片
         else:
             cv2.imwrite(path + '//test_data//' + '{0}.jpg'.format(i), face_array)  # csv文件转jpg写图片
@@ -285,12 +285,12 @@ def train(model, train_dataset, val_dataset, batch_size, epochs, learning_rate, 
         acc_val = validate(model, val_dataset, batch_size)
         acc_train_list.append(acc_train)
         acc_val_list.append(acc_val)
-        if epoch % 5 == 0:
-            model.eval()  # 模型评估,切换到test状态继续执行
-            acc_train = validate(model, train_dataset, batch_size)
-            acc_val = validate(model, val_dataset, batch_size)
-            print('After {} epochs , the acc_train is : '.format(epoch + 1), acc_train)
-            print('After {} epochs , the acc_val is : '.format(epoch + 1), acc_val)
+        # if epoch % 5 == 0:
+        #     model.eval()  # 模型评估,切换到test状态继续执行
+        #     acc_train = validate(model, train_dataset, batch_size)
+        #     acc_val = validate(model, val_dataset, batch_size)
+        #     print('After {} epochs , the acc_train is : '.format(epoch + 1), acc_train)
+        #     print('After {} epochs , the acc_val is : '.format(epoch + 1), acc_val)
 
     return model
 
@@ -301,18 +301,18 @@ def main():
     images_dir = 'D:\\code\\python_p\\images'
 
     # if not os.path.exists(images_dir) or not os.listdir(images_dir):
-    DataProcess()
-
-    # if not os.path.exists('D:\\code\\python_p\\images\\train_data\\dataset.csv'):
-    train_path = 'D:\\code\\python_p\\images\\train_data'
-    data_label(train_path)
-
-    # 检查数据预处理是否已经执行
-    # if not os.path.exists('D:\\code\\python_p\\images\\test_data\\dataset.csv'):
-    val_path = 'D:\\code\\python_p\\images\\test_data'
-    data_label(val_path)
-
-    # 数据集的使用
+    # DataProcess()
+    #
+    # # if not os.path.exists('D:\\code\\python_p\\images\\train_data\\dataset.csv'):
+    # train_path = 'D:\\code\\python_p\\images\\train_data'
+    # data_label(train_path)
+    #
+    # # 检查数据预处理是否已经执行
+    # # if not os.path.exists('D:\\code\\python_p\\images\\test_data\\dataset.csv'):
+    # val_path = 'D:\\code\\python_p\\images\\test_data'
+    # data_label(val_path)
+    #
+    # # 数据集的使用
     train_dataset = FaceDataset(root='D:\\code\\python_p\\images\\train_data')
     val_dataset = FaceDataset(root='D:\\code\\python_p\\images\\test_data')
 
